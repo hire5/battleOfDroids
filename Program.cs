@@ -14,7 +14,6 @@ namespace battleOfDroids
             field.show();
             while (true)
             {
-                field.show();
                 var input = Console.ReadKey().Key;
 
                 if (input == ConsoleKey.LeftArrow)
@@ -32,28 +31,50 @@ namespace battleOfDroids
     internal class BattleField
     {
         private Droid droid = new Droid(1, 1);
+        public const int size = 25;
         
         public void show()
         {   
             Console.Clear();
-            Console.WriteLine("000000000000");
-            for(var i = 0;i<10;i++)
-                Console.WriteLine("0          0");
-            Console.WriteLine("000000000000");
-            Console.SetCursorPosition(droid.getX(), droid.getY());
-            Console.Write('X');
+            for(int i = -1;i<=size;i++)
+                Console.Write('0');
+            Console.WriteLine();
+            for (int i = 0; i < size; i++)
+            {
+                Console.Write('0');
+                for (int j = 0; j < size; j++)
+                    Console.Write(' ');
+                Console.WriteLine('0');
+            }
+            for(int i = -1;i<=size;i++)
+                Console.Write('0');
+            show(droid);
         }
 
+        private void hide(Droid droid)
+        {
+            Console.SetCursorPosition(droid.getX(), droid.getY());
+            Console.Write(' ');
+        }
+
+        private void show(Droid droid)
+        {
+            Console.SetCursorPosition(droid.getX(), droid.getY());
+            Console.Write('X');
+            Console.SetCursorPosition(size+2, size+1);
+        }
         public void movePlayer(char direction)
         {
-            if (direction == 'l')
+            hide(droid);
+            if (direction == 'l' && droid.getX() > 1)
                 droid.moveLeft();
-            else if (direction == 'r')
+            else if (direction == 'r' && droid.getX() < size)
                 droid.moveRight();
-            else if (direction == 'd')
+            else if (direction == 'd' && droid.getY() < size)
                 droid.moveDown();
-            else if (direction == 'u')
+            else if (direction == 'u' && droid.getY() > 1)
                 droid.moveUp();
+            show(droid);
         }
     }
 
@@ -80,25 +101,21 @@ namespace battleOfDroids
 
         public void moveLeft()
         {
-            if (x > 1)
                 x--;
         }
         
         public void moveRight()
         {
-            if (x < 10)
                 x++;
         }
         
         public void moveDown()
         {
-            if (y < 10)
                 y++; 
         }
         
         public void moveUp()
         {
-            if (y > 1)
                 y--;
         }
     }
