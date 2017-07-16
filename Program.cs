@@ -47,8 +47,8 @@ namespace battleOfDroids
 
     internal class BattleField
     {
-        private Droid player = new Droid(size-2, size-2);
-        private Droid enemy = new Droid(3, 3);
+        private Droid player = new Droid(size-2, size-2, 'o');
+        private Droid enemy = new Droid(3, 3, 'x');
         public const int size = 25;
         
         public void show()
@@ -79,7 +79,7 @@ namespace battleOfDroids
         private void show(Droid droid)
         {
             Console.SetCursorPosition(droid.getX(), droid.getY());
-            Console.Write('X');
+            Console.Write(droid.getLook());
             Console.SetCursorPosition(size+2, size+1);
         }
         
@@ -116,11 +116,13 @@ namespace battleOfDroids
     {
         private int x;
         private int y;
+        private char look;
 
-        public Droid(int x, int y)
+        public Droid(int x, int y, char look)
         {
             this.x = x;
             this.y = x;
+            this.look = look;
         }
 
         public int getX()
@@ -131,6 +133,12 @@ namespace battleOfDroids
         public int getY()
         {
             return y;
+        }
+
+
+        public char getLook()
+        {
+            return look;
         }
 
         public void moveLeft()
