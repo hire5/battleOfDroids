@@ -1,36 +1,54 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Media;
 using System.Runtime.InteropServices;
 using System.Threading;
-// ReSharper disable All
 
 namespace battleOfDroids
 {
     internal class Program
-    {
+    {   private static BattleField field = new BattleField();
         public static void Main(string[] args)
         {
-            var field = new BattleField();
             field.show();
             while (true)
             {
-                var input = Console.ReadKey().Key;
-
-                if (input == ConsoleKey.LeftArrow)
-                    field.movePlayer('l');
-                else if (input == ConsoleKey.RightArrow)
-                    field.movePlayer('r');
-                else if (input == ConsoleKey.DownArrow)
-                    field.movePlayer('d');
-                else if (input == ConsoleKey.UpArrow)
-                    field.movePlayer('u');
+                playerMove();
+                enemyMove();
             }
+        }
+
+        private static void playerMove()
+        {
+            var input = Console.ReadKey().Key;
+            if (input == ConsoleKey.LeftArrow)
+                field.movePlayer('l');
+            else if (input == ConsoleKey.RightArrow)
+                field.movePlayer('r');
+            else if (input == ConsoleKey.DownArrow)
+                field.movePlayer('d');
+            else if (input == ConsoleKey.UpArrow)
+                field.movePlayer('u');
+        }
+        
+        private static void enemyMove()
+        {
+            var direction = new Random().Next(1, 5);
+            if (direction == 1)
+                field.moveEnemy('l');
+            else if (direction == 2)
+                field.moveEnemy('r');
+            else if (direction == 3)
+                field.moveEnemy('d');
+            else if (direction == 4)
+                field.moveEnemy('u');
         }
     }
 
     internal class BattleField
     {
-        private Droid droid = new Droid(1, 1);
+        private Droid player = new Droid(size-2, size-2);
+        private Droid enemy = new Droid(3, 3);
         public const int size = 25;
         
         public void show()
@@ -48,7 +66,8 @@ namespace battleOfDroids
             }
             for(int i = -1;i<=size;i++)
                 Console.Write('0');
-            show(droid);
+            show(player);
+            show(enemy);
         }
 
         private void hide(Droid droid)
@@ -63,18 +82,33 @@ namespace battleOfDroids
             Console.Write('X');
             Console.SetCursorPosition(size+2, size+1);
         }
+        
         public void movePlayer(char direction)
         {
-            hide(droid);
-            if (direction == 'l' && droid.getX() > 1)
-                droid.moveLeft();
-            else if (direction == 'r' && droid.getX() < size)
-                droid.moveRight();
-            else if (direction == 'd' && droid.getY() < size)
-                droid.moveDown();
-            else if (direction == 'u' && droid.getY() > 1)
-                droid.moveUp();
-            show(droid);
+            hide(player);
+            if (direction == 'l' && player.getX() > 1)
+                player.moveLeft();
+            else if (direction == 'r' && player.getX() < size)
+                player.moveRight();
+            else if (direction == 'd' && player.getY() < size)
+                player.moveDown();
+            else if (direction == 'u' && player.getY() > 1)
+                player.moveUp();
+            show(player);
+        }
+        
+        public void moveEnemy(char direction)
+        {
+            hide(enemy);
+            if (direction == 'l' && enemy.getX() > 1)
+                enemy.moveLeft();
+            else if (direction == 'r' && enemy.getX() < size)
+                enemy.moveRight();
+            else if (direction == 'd' && enemy.getY() < size)
+                enemy.moveDown();
+            else if (direction == 'u' && enemy.getY() > 1)
+                enemy.moveUp();
+            show(enemy);
         }
     }
 
