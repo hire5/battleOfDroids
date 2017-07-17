@@ -45,6 +45,7 @@
     <Compile Include="BattleOfDroids.cs" />
     <Compile Include="Droid.cs" />
     <Compile Include="Base.cs" />
+    <Compile Include="HealthObject.cs" />
     <Compile Include="Object2D.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

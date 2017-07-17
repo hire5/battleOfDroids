@@ -2,9 +2,10 @@
 
 namespace battleOfDroids
 {
-    public class Droid : Object2D
+    public class Droid : HealthObject
     {
-        BattleField field;  
+        BattleField field;
+        int damage = 10;
         
         public Droid(int x, int y, char look) : base(x, y, look)
         {
@@ -32,6 +33,11 @@ namespace battleOfDroids
             else if (direction == 'u' && y > 1)
                 y--;
             show();
+        }
+
+        public void shoot(HealthObject target)
+        {
+            target.getDamage(damage);
         }
     }
 }

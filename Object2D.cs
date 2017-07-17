@@ -6,7 +6,7 @@ namespace battleOfDroids
     {
         protected int x;
         protected int y;
-        private char look;
+        protected char look;
         
         protected Object2D(int x, int y, char look)
         {

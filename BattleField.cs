@@ -9,7 +9,7 @@ namespace battleOfDroids
         Droid enemy;
         Base playerBase;
         Base enemyBase;
-
+        int line;
         public BattleField()
         {
             playerBase = new Base(size-2, size-2, 'O');
@@ -46,16 +46,37 @@ namespace battleOfDroids
             }
             for(int i = -1;i<=size;i++)
                 Console.Write('0');
+            Console.Write("\n\n     1 - shoot");
             player.show();
             enemy.show();
             playerBase.show();
             enemyBase.show();
-            removeCursor();
+            showInfo();
         }
 
-        public void removeCursor()
+        void showLine(string info)
         {
-            Console.SetCursorPosition(size+2, size+1);
+            Console.Write(info);
+            Console.SetCursorPosition(size+5, Console.CursorTop+1);
+        }
+
+        void showInfo()
+        {
+            Console.SetCursorPosition(size + 5, 3);
+            showLine(playerBase.getInfo());
+            showLine(player.getInfo());
+            showLine(enemyBase.getInfo());
+            showLine(enemy.getInfo());
+        }
+        
+        public void refresh()
+        {
+            for (int i = 3; i < size; i++)
+            {
+                Console.SetCursorPosition(size+5, i);
+                Console.Write("                         ");
+            }
+            showInfo();
         }
     }
 }

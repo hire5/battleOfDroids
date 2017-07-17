@@ -11,7 +11,6 @@ namespace battleOfDroids
         static BattleField field = new BattleField();
         static Droid player = new Droid(field.getSize()-3, field.getSize()-3, 'o',field);
         static Droid enemy = new Droid(4, 4, 'x',field);
-        
         public static void Main(string[] args)
         {
             field.setPlayer(player);
@@ -35,7 +34,11 @@ namespace battleOfDroids
                 player.move('d');
             else if (input == ConsoleKey.UpArrow)
                 player.move('u');
-            field.removeCursor();
+            else if (input == ConsoleKey.D1)
+                player.shoot(enemy);
+            else if (input == ConsoleKey.D2)
+                player.shoot(enemy);
+            field.refresh();
         }
         
         static void enemyMove()
@@ -49,7 +52,7 @@ namespace battleOfDroids
                 enemy.move('d');
             else if (direction == 4)
                 enemy.move('u');
-            field.removeCursor();
+            field.refresh();
         }
     }
 }
