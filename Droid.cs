@@ -1,52 +1,37 @@
-﻿namespace battleOfDroids
+﻿using System;
+
+namespace battleOfDroids
 {
-    public class Droid
+    public class Droid : Object2D
     {
-        int x;
-        int y;
-        char look;
-
-        public Droid(int x, int y, char look)
+        BattleField field;  
+        
+        public Droid(int x, int y, char look) : base(x, y, look)
         {
-            this.x = x;
-            this.y = x;
-            this.look = look;
         }
 
-        public int getX()
+        public Droid(int x, int y, char look, BattleField field) : base(x, y, look)
         {
-            return x;
+            this.field = field;
         }
         
-        public int getY()
+        public void setField(BattleField field)
         {
-            return y;
-        }
-
-
-        public char getLook()
-        {
-            return look;
-        }
-
-        public void moveLeft()
-        {
-            x--;
+            this.field = field;
         }
         
-        public void moveRight()
+        public void move(char direction)
         {
-            x++;
-        }
-        
-        public void moveDown()
-        {
-            y++; 
-        }
-        
-        public void moveUp()
-        {
-            y--;
+            hide();
+            if (direction == 'l' && x > 1)
+                x--;
+            else if (direction == 'r' && x < field.getSize())
+                x++;
+            else if (direction == 'd' && y < field.getSize())
+                y++;
+            else if (direction == 'u' && y > 1)
+                y--;
+            show();
         }
     }
 }

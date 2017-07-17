@@ -6,10 +6,16 @@ using System.Threading;
 
 namespace battleOfDroids
 {
-    internal class BattleOfDroids
-    {   static BattleField field = new BattleField();
+    class BattleOfDroids
+    {   
+        static BattleField field = new BattleField();
+        static Droid player = new Droid(field.getSize()-3, field.getSize()-3, 'o',field);
+        static Droid enemy = new Droid(4, 4, 'x',field);
+        
         public static void Main(string[] args)
         {
+            field.setPlayer(player);
+            field.setEnemy(enemy);
             field.show();
             while (true)
             {
@@ -22,26 +28,28 @@ namespace battleOfDroids
         {
             var input = Console.ReadKey().Key;
             if (input == ConsoleKey.LeftArrow)
-                field.movePlayer('l');
+                player.move('l');
             else if (input == ConsoleKey.RightArrow)
-                field.movePlayer('r');
+                player.move('r');
             else if (input == ConsoleKey.DownArrow)
-                field.movePlayer('d');
+                player.move('d');
             else if (input == ConsoleKey.UpArrow)
-                field.movePlayer('u');
+                player.move('u');
+            field.removeCursor();
         }
         
         static void enemyMove()
         {
             var direction = new Random().Next(1, 5);
             if (direction == 1)
-                field.moveEnemy('l');
+                enemy.move('l');
             else if (direction == 2)
-                field.moveEnemy('r');
+                enemy.move('r');
             else if (direction == 3)
-                field.moveEnemy('d');
+                enemy.move('d');
             else if (direction == 4)
-                field.moveEnemy('u');
+                enemy.move('u');
+            field.removeCursor();
         }
     }
 }
